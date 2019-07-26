@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         rvList.setLayoutManager(layoutManager);
         adapter = new ListAdapter(context);
         rvList.setAdapter(adapter);
+
     }
 
     private void getData() {
