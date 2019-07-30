@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
 
 //    File & Images
-    implementation 'com.facebook.fresco:fresco:1.10.0'
+    implementation 'com.facebook.fresco:fresco:1.13.0'
 
 
 }

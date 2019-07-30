@@ -4,6 +4,7 @@ package app.dev.baseapp.connection;
 import app.dev.baseapp.model.CommonResponse;
 import app.dev.baseapp.model.LoginResponse;
 import app.dev.baseapp.model.ResgisterUser;
+import app.dev.baseapp.model.ThougthOfTheDayResponse;
 import app.dev.baseapp.model.input.InputLogin;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -11,9 +12,11 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 
 public interface API {
@@ -41,5 +44,9 @@ public interface API {
     @FormUrlEncoded
     @POST("register.json")
     Call<ResgisterUser> getTestt(@Field("phone") String site_id, @Field("device_token") String engineer_id);
+
+    @GET("get.json")
+    Call<ThougthOfTheDayResponse> getThoughtOfTheDay(@Query("location") String location);
+
 }
 

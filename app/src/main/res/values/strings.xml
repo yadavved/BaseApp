@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BaseApp</string>
+    <string name="thought_of_the_day">Thought Of The Day</string>
 </resources>

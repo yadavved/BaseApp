@@ -7,18 +7,21 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/print"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center"
+        android:background="#EBA2A2"
         android:gravity="center"
-        android:id="@+id/print"
-        android:text="Listing "
-        android:background="#EBA2A2"/>
+        android:text="@string/thought_of_the_day" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_list">
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

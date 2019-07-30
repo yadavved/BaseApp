@@ -9,16 +9,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import app.dev.baseapp.Test.A;
-import app.dev.baseapp.adapter.ListAdapter;
+import java.util.ArrayList;
+import java.util.List;
+
+import app.dev.baseapp.adapter.ThoughtOfTheDayAdapter;
+import app.dev.baseapp.connection.API;
+import app.dev.baseapp.connection.RestClient;
+import app.dev.baseapp.model.ContentPosition;
+import app.dev.baseapp.model.ThougthOfTheDayResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView rvList;
-    ListAdapter adapter;
+    ThoughtOfTheDayAdapter adapter;
     TextView tvPrint;
     private LinearLayoutManager layoutManager;
     private Context context;
+    private ThougthOfTheDayResponse thougthOfTheDay;
+    public List<ContentPosition> contentPositionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,28 +38,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getIDs();
         getData();
-        setAdapter();
         tvPrint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             }
         });
 
-        A a = new A(context);
-        a.hello();
-        a.helloFromB();
+//        A a = new A(context);
+//        a.hello();
+//        a.helloFromB();
 
     }
 
-    private void setAdapter() {
-        layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
-        rvList.setLayoutManager(layoutManager);
-        adapter = new ListAdapter(context);
-        rvList.setAdapter(adapter);
-
-    }
 
     private void getData() {
+        API api = RestClient.getClient().create(API.class);
+        api.getThoughtOfTheDay("thoughtoftheday").enqueue(new Callback<ThougthOfTheDayResponse>() {
+            @Override
+            public void onResponse(Call<ThougthOfTheDayResponse> call, Response<ThougthOfTheDayResponse> response) {
+                if (response.isSuccessful()) {
+                    if (response.code() == 200) {
+                        thougthOfTheDay = new ThougthOfTheDayResponse();
+                        contentPositionList.clear();
+                        thougthOfTheDay = response.body();
+                        contentPositionList = thougthOfTheDay.getPromotedContent().getContentPositions();
+
+                        setThougthOfTheDayAdapter(contentPositionList);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ThougthOfTheDayResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setThougthOfTheDayAdapter(List<ContentPosition> contentPositionList ) {
+        layoutManager = new LinearLayoutManager(context, RecyclerView.VERTICAL, false);
+        rvList.setLayoutManager(layoutManager);
+        adapter = new ThoughtOfTheDayAdapter(context, contentPositionList);
+        rvList.setAdapter(adapter);
+
     }
 
     private void getIDs() {

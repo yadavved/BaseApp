@@ -1,24 +1,34 @@
 package app.dev.baseapp.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import app.dev.baseapp.R;
+import com.facebook.drawee.view.SimpleDraweeView;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyviewHolder> {
+import java.util.List;
+
+import app.dev.baseapp.R;
+import app.dev.baseapp.model.ContentPosition;
+import app.dev.baseapp.model.ThougthOfTheDayResponse;
+
+public class ThoughtOfTheDayAdapter extends RecyclerView.Adapter<ThoughtOfTheDayAdapter.MyviewHolder> {
 
     private Context context;
     private LayoutInflater inflater;
+    List<ContentPosition> contentPositionList;
 
-
-    public ListAdapter(Context context) {
+    public ThoughtOfTheDayAdapter(Context context, List<ContentPosition> contentPositionList) {
         this.context = context;
         this.inflater = inflater.from(context);
+        this.contentPositionList = contentPositionList;
 
     }
 
@@ -34,6 +44,11 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyviewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyviewHolder myviewHolder, final int position) {
 
+        String ThoughtOfTheDay = contentPositionList.get(position).getDescription().toString();
+        Uri imageUri = Uri.parse(contentPositionList.get(position).getImage());
+        Toast.makeText(context, ThoughtOfTheDay, Toast.LENGTH_SHORT).show();
+        myviewHolder.tvImageUrl.setText(ThoughtOfTheDay);
+        myviewHolder.authorImage.setImageURI(imageUri);
 
 //        myviewHolder.rlSurveyListing.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -77,17 +92,22 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MyviewHolder> 
 
     @Override
     public int getItemCount() {
-
-//        return itemList.size();
-        return 0;
+        return contentPositionList.size();
     }
 
 
     public class MyviewHolder extends RecyclerView.ViewHolder {
 
+        TextView tvImageUrl;
+        SimpleDraweeView authorImage;
+
 
         public MyviewHolder(@NonNull View itemView) {
             super(itemView);
+
+            tvImageUrl = itemView.findViewById(R.id.tv_thought_of_the_day);
+            authorImage = itemView.findViewById(R.id.iv_author_img);
+
 
         }
     }

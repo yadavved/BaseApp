@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClient {
 
-    private static String ROOT = ""; // Production
+    private static String ROOT = "https://www.forbes.com/forbesapi/promote/"; // Production
     private static String ROOT_DEV = ""; // Dev
 
     private static Retrofit retrofit = null;
