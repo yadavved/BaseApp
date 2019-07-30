@@ -2,17 +2,21 @@ package app.dev.baseapp;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import app.dev.baseapp.Test.A;
 import app.dev.baseapp.adapter.ListAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView rvList;
     ListAdapter adapter;
+    TextView tvPrint;
     private LinearLayoutManager layoutManager;
     private Context context;
 
@@ -24,6 +28,15 @@ public class MainActivity extends AppCompatActivity {
         getIDs();
         getData();
         setAdapter();
+        tvPrint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        A a = new A(context);
+        a.hello();
+        a.helloFromB();
 
     }
 
@@ -40,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void getIDs() {
         rvList = findViewById(R.id.rv_list);
+        tvPrint = findViewById(R.id.print);
     }
-
-
 }
